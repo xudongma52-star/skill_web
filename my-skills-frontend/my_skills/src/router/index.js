@@ -2,6 +2,9 @@ import { createRouter,createWebHashHistory } from "vue-router";
 import ArticleList from '../views/ArticleList.vue';
 import ArticleDetail from '../views/ArticleDetail.vue';
 import ArticleForm from '../views/ArticleForm.vue';
+import UserRegister from "../views/UserRegister.vue";
+import UserLogin from "../views/UserLogin.vue";
+import {useAuthStore} from "@/stores/user.js"//导入authStore
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
     routes:[
@@ -33,7 +36,34 @@ const router = createRouter({
             name:'ArticleEdit',
             component:ArticleForm
 
+        },
+        {
+            //路由5:注册界面
+            //URL:http://local:5173/register
+            path:'/register',
+            name:'UserRegister',
+            component:UserRegister
+        },
+        {
+            //路由6：登录页面
+            path:'/login',
+            name:'UserLogin',
+            component:UserLogin
         }
     ]
 });
+router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore();
+    const requiresAuth = ['ArticleCreate', 'ArticleEdit','ArticleList']; // 定义需要登录才能访问的路由名称
+
+    // 如果目标路由需要认证，但用户未登录
+    if (requiresAuth.includes(to.name) && !authStore.isAuthenticated) {
+        // 重定向到登录页
+        next({ name: 'UserLogin' });
+    } else {
+        // 否则，正常放行
+        next();
+    }
+});
+
 export default router;

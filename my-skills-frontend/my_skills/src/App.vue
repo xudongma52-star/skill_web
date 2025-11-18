@@ -5,17 +5,33 @@
             <nav>
                 <!--这个链接总是指向首页-->
                 <RouterLink to="/">首页</RouterLink>
+              <div v-if="authStore.isAuthenticated"></div>
+              <div v-else>
+                <!-- 如果未登录，显示登录/注册链接 -->
+                <RouterLink to="/login"></RouterLink>
+                <RouterLink to="/register"></RouterLink>
+              </div>
             </nav>
         </div>
     </header>
-    <mian>
+    <main>
         <!--路由的匹配组件在这里-->
         <RouterView/>
-    </mian>
+    </main>
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView,useRouter } from 'vue-router';
+import { useAuthStore } from './stores/user';
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+function logout(){
+  authStore.clearToken();
+  alert('您已退出登录');
+  router.push('/login');
+}
 
 
 </script>
@@ -37,4 +53,5 @@ nav a.router-link-exact-active {
 main {
   padding: 2rem;
 }
+nav { display: flex; justify-content: space-between; align-items: center; }
 </style>
