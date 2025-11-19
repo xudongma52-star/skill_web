@@ -58,6 +58,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             // 6. 将认证信息设置到 Spring Security 的上下文中
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        }else{
+
         }
 
         // 7. 继续执行过滤器链中的下一个过滤器

@@ -11,6 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface KnowledgeArticleRepository extends JpaRepository<KnowledgeArticle, Long> {
-    // 目前这里是空的，但已经功能非常强大了！
     // Spring Data JPA 会在运行时自动为我们生成这个接口的实现。
 }

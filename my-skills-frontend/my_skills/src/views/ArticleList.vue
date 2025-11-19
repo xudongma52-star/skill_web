@@ -23,17 +23,22 @@
     </ul>
     <div v-else-if="!loading">暂时没有文章</div>
     </div>
+
+  <button @click="LogOut">退出登录</button>
 </template>
 
 <script setup>
 import{ref, onMounted} from 'vue';
 import api from '@/services/api';
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter} from 'vue-router';
+import {useAuthStore} from "@/stores/user.js";
+const authStore = useAuthStore();
 
 const articles = ref([]);
 const loading = ref(true);
 const error = ref(null);
-const router = useRoute();
+const route = useRoute();
+const router = useRouter();
 
 //async函数内部使用await暂停关键字
 async function fetchArticles() {
@@ -44,6 +49,7 @@ async function fetchArticles() {
 
         const response = await api.getAllArticles();
         articles.value = response.data;
+        console.log(1);
     } catch(err){
         //console.error会显示红色
         console.error('获取文章失败：',err);
@@ -65,6 +71,13 @@ async function deleteArticle(id) {
         alert('删除失败')
     }
 }
+
+function LogOut(){
+  authStore.clearToken();
+  router.push('/login');
+  alert("退出成功")
+}
+
 
 function confirmDelete(id){
     //window.confirm()是浏览器提供的js，会暂停所有的JavaScript执行，对话框有两个固定按钮OK和取消

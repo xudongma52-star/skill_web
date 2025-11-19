@@ -13,7 +13,7 @@ const apiClient = axios.create(
 //添加请求拦截器
 apiClient.interceptors.request.use(config => {
     //每次发送前都去localStorage里面看看这家伙有没有token
-    const token = localStorage.getItem("use_token");
+    const token = localStorage.getItem("user_token");
     if (token) {
         //如果有，就把它加加到请求的Authorization头里面
         config.headers.Authorization = `Bearer ${token}`;

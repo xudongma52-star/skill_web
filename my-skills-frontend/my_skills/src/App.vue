@@ -4,7 +4,7 @@
         <div class="wrapper">
             <nav>
                 <!--这个链接总是指向首页-->
-                <RouterLink to="/">首页</RouterLink>
+
               <div v-if="authStore.isAuthenticated"></div>
               <div v-else>
                 <!-- 如果未登录，显示登录/注册链接 -->

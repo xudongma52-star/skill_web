@@ -3,6 +3,7 @@ package com.max.myskills.controller;
 import com.max.myskills.dto.LoginRequest;
 import com.max.myskills.dto.RegisterRequest;
 import com.max.myskills.entity.User;
+import com.max.myskills.security.JwtTokenProvider;
 import com.max.myskills.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/health")
     public String health() {
@@ -40,7 +43,6 @@ public class UserController {
             newUser.setPassword(registerRequest.getPassword());
             newUser.setPhone(registerRequest.getPhone());
             newUser.setAge(registerRequest.getAge());
-//            newUser.setAge(11);
             newUser.setRegion(registerRequest.getRegion());
             newUser.setAvatar(registerRequest.getAvatar());
             //调用service注册
@@ -60,10 +62,13 @@ public class UserController {
         try{
 
             User loginUser = userService.login(loginRequest.getUsername(),loginRequest.getPassword());
+            String token = jwtTokenProvider.generateToken(loginUser.getUserName());
             Map<String,Object> response = new HashMap<>();
             response.put("message","登陆成功");
             response.put("userId", loginUser.getId());
             response.put("username",loginUser.getUserName());
+            response.put("token", token);
+
             return  ResponseEntity.ok(response);
 
         }catch (RuntimeException e){

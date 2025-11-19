@@ -23,6 +23,7 @@ async function handleRegister(){
   isLoading.value=true;//进入加载状态
   try{
     console.log("register")
+    console.log("can");
     const response = await api.getUserRegister({
       username:username.value,
       password:password.value,
@@ -32,8 +33,10 @@ async function handleRegister(){
       age:age.value,
 
     });
+    console.log("can01");
+
+     router.push("/login");
     alert("注册成功");
-    router.push("/");
   }catch (err){
     error.value=err.response?.data?.message||'注册失败';
   }finally {

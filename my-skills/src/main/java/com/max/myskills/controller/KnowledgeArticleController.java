@@ -1,5 +1,6 @@
 package com.max.myskills.controller;
 
+import com.max.myskills.security.JwtTokenProvider;
 import com.max.myskills.service.KnowledgeArticleService;
 import com.max.myskills.entity.KnowledgeArticle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.List;
 public class KnowledgeArticleController {
     @Autowired
     private KnowledgeArticleService knowledgeArticleService;
-
+    private JwtTokenProvider jwtTokenProvider;
     /**
      * API 1:获取所有文章
      * HTTP 方法：GET
