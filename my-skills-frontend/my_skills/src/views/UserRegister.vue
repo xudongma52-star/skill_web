@@ -47,6 +47,7 @@ async function handleRegister(){
 
 <template>
   <div>
+
     <h2>注册</h2>
     <form @submit.prevent="handleRegister">
       <div class="form-row">
@@ -70,6 +71,7 @@ async function handleRegister(){
         <input type="number" v-model.number="age" placeholder="年龄" required>
         <br>
         <button type="submit">注册</button>
+
         <div v-if="error">{{error}}</div>
 
 
@@ -77,6 +79,7 @@ async function handleRegister(){
 
     </form>
   </div>
+  <router-link :to="`/login`">返回登陆</router-link>
 </template>
 
 <style scoped>
